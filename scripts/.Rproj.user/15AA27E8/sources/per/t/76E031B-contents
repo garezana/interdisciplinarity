@@ -11,7 +11,6 @@ output:
 library(dplyr)
 library(stringr)
 library(reticulate)
-library(rmarkdown)
 knitr::knit_engines$set(python = reticulate::eng_python)
 ```
 
@@ -23,26 +22,16 @@ filenames = []
 for file in os.listdir("./data/inputdata/"):
     if file.endswith(".txt"):
       #Appending text file names without extension to list
-      filenames.append(os.path.splitext(file)[0])
+      filenames.append(file)
 print(filenames)
 ```
 ```{r eval=FALSE}
-df = read.table( "data/inputdata/ECOL.ECON.2018.txt",fileEncoding = "utf-16", stringsAsFactors = FALSE,
-                  sep= "\t",header = TRUE, fill = TRUE,check.names = FALSE,
-                  quote="",na.strings=c("NA","NaN", " ") )
-
-
-txtname=paste(py$filenames[1],"txt",sep=".")
-txtpath=paste("data/inputdata",txtname,sep="/") 
-print(txtpath)
-```
-```{r }
 #For loop that iterates through file names
 for (v in py$filenames){
-txtname=paste(v,"txt",sep=".")
-txtpath=paste("data/inputdata",txtname,sep="/") 
+  txtname=paste(v,"txt",sep=".")
+  txtpath=paste(v,"txt",sep=".")
   #Creating data frame by file name
-  df = read.table( txtpath,fileEncoding = "utf-16", stringsAsFactors = FALSE,
+  df = read.table( txtname,fileEncoding = "utf-16", stringsAsFactors = FALSE,
                   sep= "\t",header = TRUE, fill = TRUE,check.names = FALSE,
                   quote="",na.strings=c("NA","NaN", " ") )
   #Selecting variables of interest
@@ -78,12 +67,8 @@ txtpath=paste("data/inputdata",txtname,sep="/")
  
 #Creating data frame from vectors
 z=data.frame(uid,article=y,citedjournal=x)
-
-#Specifying output path
 csvname=paste(v,"csv",sep=".")
-cvpath=paste("data/outputdata",csvname,sep = "/")
-
-#Creating output files
+cvpath=paste("/data/outputdata",csvname,sep = "/")
 write.csv(z,file = cvpath,row.names=FALSE)
 
 }#end for loop v

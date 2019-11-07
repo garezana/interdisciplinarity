@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1573093430606.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "4212124265",
+    "id" : "76E031B",
+    "lastKnownWriteTime" : 1573097153,
+    "last_content_update" : 1573097153208,
+    "path" : "~/Desktop/garezana/interdisciplinarity/scripts/extractingJournals.Rmd",
+    "project_path" : "extractingJournals.Rmd",
+    "properties" : {
+        "cursorPosition" : "25,15",
+        "scrollLine" : "18"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}
