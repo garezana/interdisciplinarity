@@ -18,31 +18,36 @@ knitr::knit_engines$set(python = reticulate::eng_python)
 ```{python}
 import os
 #Creating empty list
-filenames = []
+txtnames = []
 #For loop that iterates through current directory files
 for file in os.listdir("./data/inputdata/"):
     if file.endswith(".txt"):
       #Appending text file names without extension to list
-      filenames.append(os.path.splitext(file)[0])
-print(filenames)
+      txtnames.append(os.path.splitext(file)[0])
 ```
-```{r eval=FALSE}
-df = read.table( "data/inputdata/ECOL.ECON.2018.txt",fileEncoding = "utf-16", stringsAsFactors = FALSE,
-                  sep= "\t",header = TRUE, fill = TRUE,check.names = FALSE,
-                  quote="",na.strings=c("NA","NaN", " ") )
 
+```{r}
+#Some functions
+filename = function(basename,extension,sep1,parpath="",sep2="") {
+            if (length(parpath)==0){              
+                x=paste(basename,extension,sep=sep1)
+                return(x)
+                }#end if
+            else{
+              x=paste(basename,extension,sep=sep1)
+              y=paste(parpath,x,sep = sep2)
+              return(y)
+                }#end else
+                #if (length(parpath)!=0){
+}#end filename f(x)
 
-txtname=paste(py$filenames[1],"txt",sep=".")
-txtpath=paste("data/inputdata",txtname,sep="/") 
-print(txtpath)
 ```
 ```{r }
 #For loop that iterates through file names
-for (v in py$filenames){
-txtname=paste(v,"txt",sep=".")
-txtpath=paste("data/inputdata",txtname,sep="/") 
+for (v in py$txtnames){
+txtpath=filename(basename=v,extension="txt",sep1=".",parpath="data/inputdata",sep2="/") 
   #Creating data frame by file name
-  df = read.table( txtpath,fileEncoding = "utf-16", stringsAsFactors = FALSE,
+  df = read.table(txtpath,fileEncoding = "utf-16", stringsAsFactors = FALSE,
                   sep= "\t",header = TRUE, fill = TRUE,check.names = FALSE,
                   quote="",na.strings=c("NA","NaN", " ") )
   #Selecting variables of interest
@@ -80,9 +85,7 @@ txtpath=paste("data/inputdata",txtname,sep="/")
 z=data.frame(uid,article=y,citedjournal=x)
 
 #Specifying output path
-csvname=paste(v,"csv",sep=".")
-cvpath=paste("data/outputdata",csvname,sep = "/")
-
+cvpath=filename(basename=v,extension="csv",sep1=".",parpath="data/outputdata",sep2="/") 
 #Creating output files
 write.csv(z,file = cvpath,row.names=FALSE)
 
