@@ -64,7 +64,7 @@ for (v in py$filenames){
   
  
 #Creating data frame from vectors
-z=data.frame(uid1=uid,article=y,citedjournal=x)
+z=data.frame(uid,article=y,citedjournal=x)
 csvname=paste(v,"csv",sep=".")
 write.csv(z,file = csvname,row.names=FALSE)
 
