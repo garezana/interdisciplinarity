@@ -8,9 +8,6 @@ for f in files:
     if f.endswith(".txt"):  
         #Read txt file
         df=pd.read_table(f, encoding="utf-16", sep="\t")
-        #Drop all empty columns
-        df.dropna(axis=1,how='all',inplace=True)
-        #df.drop(df.columns[0], axis=1)
         #Write df as csv without null columns
         df.to_csv(os.path.splitext(f)[0]+ "1.txt", sep="\t")
 
