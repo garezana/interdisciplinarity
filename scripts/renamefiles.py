@@ -2,7 +2,7 @@ import os, csv, glob
 import pandas as pd
 import numpy as np
 
-files = [f for f in os.listdir("/data/inputdta") if os.path.isfile(f)]
+files = [f for f in os.listdir("./data/inputdata") if os.path.isfile(f)]
 for f in files:
     #Only for txt files
     if f.endswith(".txt"):  
