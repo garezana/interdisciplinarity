@@ -1,0 +1,73 @@
+---
+title: "Journal Interdisciplinarity"
+author: "Virnaliz Cruz"
+date: "10/16/2019"
+output:
+    pdf_document:
+        latex_engine: xelatex
+---
+
+```{r setup, include=FALSE}
+library(dplyr)
+library(stringr)
+library(reticulate)
+knitr::knit_engines$set(python = reticulate::eng_python)
+```
+
+```{python}
+import os
+#Creating empty list
+filenames = []
+#For loop that iterates through current directory files
+for file in os.listdir("."):
+    if file.endswith(".txt"):
+      #Appending text file names without extension to list
+      filenames.append(os.path.splitext(file)[0])
+```
+```{r}
+#For loop that iterates through file names
+for (v in py$filenames){
+  txtname=paste(v,"txt",sep=".")
+  #Creating data frame by file name
+  df = read.table( txtname,fileEncoding = "utf-16", stringsAsFactors = FALSE,
+                  sep= "\t",header = TRUE, fill = TRUE,check.names = FALSE,
+                  quote="",na.strings=c("NA","NaN", " ") )
+  #Selecting variables of interest
+  references0=df %>% select(AU,TI, SO, DT, C1, PD, PY, CR)
+
+  #Splitting cited references and defining as lists  
+  references=str_split(references0$CR, ";")
+
+  #Renaming lists
+  names(references)=references0$TI
+
+  #Separating references into lists of lists
+  litvect=sapply(references, function(row){
+    str_split(row, ",")
+        })
+
+ #Creating vectors to hold data
+  x=vector()
+  y=vector()
+  uid=vector()
+
+  #Updating vectors with data
+  for (i in 1:length( litvect ) ){
+    for(j in 1:length( litvect[[i]] )    ){
+      x[length(x)+1]=litvect[[i]][[j]][3]
+      y[length(y)+1]=names(litvect[i])
+      uid[length(uid)+1]=i
+    
+    }#end for loop j
+
+  }#end for loop i
+  
+ 
+#Creating data frame from vectors
+z=data.frame(uid1=uid,article=y,citedjournal=x)
+csvname=paste(v,"csv",sep=".")
+write.csv(z,file = csvname,row.names=FALSE)
+
+}#end for loop v
+```
+
