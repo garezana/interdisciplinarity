@@ -15,17 +15,6 @@ library(rmarkdown)
 knitr::knit_engines$set(python = reticulate::eng_python)
 ```
 
-```{python}
-import os
-#Creating empty list
-txtnames = []
-#For loop that iterates through current directory files
-for file in os.listdir("./data/inputdata/"):
-    if file.endswith(".txt"):
-      #Appending text file names without extension to list
-      txtnames.append(os.path.splitext(file)[0])
-```
-
 ```{r}
 #Some functions
 filename = function(basename,extension,sep1,parpath="",sep2="") {
@@ -42,6 +31,19 @@ filename = function(basename,extension,sep1,parpath="",sep2="") {
 }#end filename f(x)
 
 ```
+
+```{python}
+import os
+#Creating empty list
+txtnames = []
+#For loop that iterates through current directory files
+for file in os.listdir("./data/inputdata/"):
+    if file.endswith(".txt"):
+      #Appending text file names without extension to list
+      txtnames.append(os.path.splitext(file)[0])
+```
+
+
 ```{r }
 #For loop that iterates through file names
 for (v in py$txtnames){
