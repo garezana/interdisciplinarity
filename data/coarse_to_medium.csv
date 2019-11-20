@@ -1,0 +1,262 @@
+﻿coarse_cat,wos_cat
+Arts_Humanities,Art
+Arts_Humanities,Architecture
+Arts_Humanities,Classics
+Arts_Humanities,Cultural Studies
+Arts_Humanities,Dance
+Arts_Humanities,Folklore
+Arts_Humanities,History
+Arts_Humanities,History & Philosophy of Science
+Arts_Humanities,"Humanities, Multidisciplinary"
+Arts_Humanities,Language & Linguistics
+Arts_Humanities,Linguistics
+Arts_Humanities,Literary Reviews
+Arts_Humanities,Literary Theory & Criticism
+Arts_Humanities,Literature
+Arts_Humanities,"Literature, African, Australian, Canadian"
+Arts_Humanities,"Literature, American"
+Arts_Humanities,"Literature, British Isles "
+Arts_Humanities,"Literature, German, Dutch, Scandanavian"
+Arts_Humanities,"Literature, Romance"
+Arts_Humanities,"Literature, Slavic"
+Arts_Humanities,Medieval & Renaissance Studies
+Arts_Humanities,Music
+Arts_Humanities,Philosophy
+Arts_Humanities,Poetry
+Arts_Humanities,Religion
+Arts_Humanities,Theater
+Clinical_PreClinical_Health,Allergy
+Clinical_PreClinical_Health,Anesthesiology
+Clinical_PreClinical_Health,Audiology & Speech-Language Pathology
+Clinical_PreClinical_Health,Cardiac & Cardiovascular Systems
+Clinical_PreClinical_Health,Clinical Neurology
+Clinical_PreClinical_Health,Critical Care Medicine
+Clinical_PreClinical_Health,"Dentistry, Oral Surgery & Medicine"
+Clinical_PreClinical_Health,Dermatology
+Clinical_PreClinical_Health,Emergency Medicine
+Clinical_PreClinical_Health,Endocrinology & Metabolism
+Clinical_PreClinical_Health,Gastroenterology & Hepatology
+Clinical_PreClinical_Health,Geriatrics & Gerontology
+Clinical_PreClinical_Health,Health Care Sciences & Services
+Clinical_PreClinical_Health,Hematology
+Clinical_PreClinical_Health,Infectious Diseases
+Clinical_PreClinical_Health,Integrative & Complementary Medicine
+Clinical_PreClinical_Health,Medical Ethics
+Clinical_PreClinical_Health,Medical Informatics
+Clinical_PreClinical_Health,Medical Laboratory Technology
+Clinical_PreClinical_Health,"Medicine, General & Internal"
+Clinical_PreClinical_Health,"Medicine, Legal"
+Clinical_PreClinical_Health,"Medicine, Research & Experimental "
+Clinical_PreClinical_Health,Neuroimaging
+Clinical_PreClinical_Health,Nursing
+Clinical_PreClinical_Health,Nutrition & Dietetics
+Clinical_PreClinical_Health,Obstetrics & Gynecology
+Clinical_PreClinical_Health,Oncology
+Clinical_PreClinical_Health,Ophthalmology
+Clinical_PreClinical_Health,Orthopedics
+Clinical_PreClinical_Health,Otorhinolaryngology
+Clinical_PreClinical_Health,Pathology
+Clinical_PreClinical_Health,Pediatrics
+Clinical_PreClinical_Health,Peripheral Vascular Disease
+Clinical_PreClinical_Health,Pharmacology & Pharmacy
+Clinical_PreClinical_Health,Primary Health Care
+Clinical_PreClinical_Health,Psychiatry
+Clinical_PreClinical_Health,"Public, Environmental & Occupational Health"
+Clinical_PreClinical_Health,"Radiology, Nuclear Medicine & Medical Imaging"
+Clinical_PreClinical_Health,Rehabilitation
+Clinical_PreClinical_Health,Respiratory System
+Clinical_PreClinical_Health,Rheumatology
+Clinical_PreClinical_Health,Sport Sciences
+Clinical_PreClinical_Health,Substance Abuse
+Clinical_PreClinical_Health,Surgery
+Clinical_PreClinical_Health,Transplantation
+Clinical_PreClinical_Health,Tropical Medicine
+Clinical_PreClinical_Health,Urology & Nephrology
+Engineering_Technology,Acoustics
+Engineering_Technology,Automation & Control Systems
+Engineering_Technology,"Computer Science, Artificial Intelligence"
+Engineering_Technology,"Computer Science, Cybernetics"
+Engineering_Technology,"Computer Science, Hardware & Architecture"
+Engineering_Technology,"Computer Science, Information Systems"
+Engineering_Technology,"Computer Science, Interdisciplinary Applications"
+Engineering_Technology,"Computer Science, Software Engineering"
+Engineering_Technology,"Computer Science, Theory & Methods"
+Engineering_Technology,Construction & Building Technology
+Engineering_Technology,Energy & Fuels
+Engineering_Technology,"Engineering, Aerospace"
+Engineering_Technology,"Engineering, Biomedical"
+Engineering_Technology,"Engineering, Chemical"
+Engineering_Technology,"Engineering, Civil"
+Engineering_Technology,"Engineering, Electrical & Electronic"
+Engineering_Technology,"Engineering, Environmental"
+Engineering_Technology,"Engineering, Geological"
+Engineering_Technology,"Engineering, Industrial"
+Engineering_Technology,"Engineering, Manufacturing"
+Engineering_Technology,"Engineering, Marine"
+Engineering_Technology,"Engineering, Mechanical"
+Engineering_Technology,"Engineering, Multidisciplinary"
+Engineering_Technology,"Engineering, Ocean"
+Engineering_Technology,"Engineering, Petroleum"
+Engineering_Technology,Ergonomics
+Engineering_Technology,Imaging Science & Photographic Technology
+Engineering_Technology,Information Science & Library Science
+Engineering_Technology,Instruments & Instrumentation
+Engineering_Technology,"Materials Science, Biomaterials"
+Engineering_Technology,"Materials Science, Ceramics"
+Engineering_Technology,"Materials Science, Characterization & Testing"
+Engineering_Technology,"Materials Science, Composites"
+Engineering_Technology,"Materials Science, Multidisciplinary"
+Engineering_Technology,"Materials Science, Paper & Wood"
+Engineering_Technology,"Materials Science, Coatings & Films"
+Engineering_Technology,"Materials Science, Textiles"
+Engineering_Technology,Mechanics
+Engineering_Technology,Metallurgy & Metallurgical Engineering
+Engineering_Technology,Microscopy
+Engineering_Technology,Mining & Mineral Processing
+Engineering_Technology,Nuclear Science & Technology
+Engineering_Technology,Operations Research & Management Science
+Engineering_Technology,Remote Sensing
+Engineering_Technology,Robotics
+Engineering_Technology,Telecommunications
+Engineering_Technology,Transportation
+Engineering_Technology,Transportation Science & Technology
+Life_Sciences,Agricultural Economics & Policy
+Life_Sciences,Agricultural Engineering
+Life_Sciences,"Agriculture, Dairy & Animal Science"
+Life_Sciences,"Agriculture, Multidisciplinary"
+Life_Sciences,Agronomy
+Life_Sciences,Anatomy & Morphology
+Life_Sciences,Andrology
+Life_Sciences,Behavioral Sciences
+Life_Sciences,Biochemical Research Methods
+Life_Sciences,Biochemistry & Molecular Biology
+Life_Sciences,Biodiversity Conservation
+Life_Sciences,Biology
+Life_Sciences,Biophysics
+Life_Sciences,Biotechnology & Applied Microbiology
+Life_Sciences,Cardiac & Cardiovascular Systems
+Life_Sciences,Cell & Tissue Engineering
+Life_Sciences,Cell Biology
+Life_Sciences,Developmental Biology
+Life_Sciences,Ecology
+Life_Sciences,Endocrinology & Metabolism
+Life_Sciences,Entomology
+Life_Sciences,Environmental Sciences
+Life_Sciences,Evolutionary Biology
+Life_Sciences,Fisheries
+Life_Sciences,Food Science & Technology
+Life_Sciences,Forestry
+Life_Sciences,Gastroenterology & Hepatology
+Life_Sciences,Genetics & Heredity
+Life_Sciences,Horticulture
+Life_Sciences,Immunology
+Life_Sciences,Limnology
+Life_Sciences,Marine & Freshwater Biology
+Life_Sciences,Mathematical & Computational Biology
+Life_Sciences,Microbiology
+Life_Sciences,Multidisciplinary Sciences
+Life_Sciences,Mycology
+Life_Sciences,Neurosciences
+Life_Sciences,Oncology
+Life_Sciences,Ornithology
+Life_Sciences,Paleontology
+Life_Sciences,Parasitology
+Life_Sciences,Pathology
+Life_Sciences,Peripheral Vascular Disease
+Life_Sciences,Pharmacology & Pharmacy
+Life_Sciences,Physiology
+Life_Sciences,Plant Sciences
+Life_Sciences,Reproductive Biology
+Life_Sciences,Soil Science
+Life_Sciences,Toxicology
+Life_Sciences,Transplantation
+Life_Sciences,Veterinary Sciences
+Life_Sciences,Virology
+Life_Sciences,Zoology
+Physical_Sciences,Astronomy/Astrophysics
+Physical_Sciences,"Chemistry, Analytical"
+Physical_Sciences,"Chemistry, Applied"
+Physical_Sciences,"Chemistry, Inorganic & Nuclear"
+Physical_Sciences,"Chemistry, Medicinal"
+Physical_Sciences,"Chemistry, Multidisciplinary"
+Physical_Sciences,"Chemistry, Organic"
+Physical_Sciences,"Chemistry, Physical"
+Physical_Sciences,Crystallography
+Physical_Sciences,Electrochemistry
+Physical_Sciences,Geochemistry & Geophysics
+Physical_Sciences,"Geography, Physical"
+Physical_Sciences,Geology
+Physical_Sciences,"Geosciences, Multidisciplinary"
+Physical_Sciences,Logic
+Physical_Sciences,Mathematics
+Physical_Sciences,"Mathematics, Applied"
+Physical_Sciences,"Mathematics, Interdisciplinary Applications"
+Physical_Sciences,Meteorology & Atmospheric Science
+Physical_Sciences,Mineralogy
+Physical_Sciences,Multidisciplinary Sciences
+Physical_Sciences,Nanoscience & Nanotechnology
+Physical_Sciences,Oceanography
+Physical_Sciences,Optics
+Physical_Sciences,"Physics, Applied"
+Physical_Sciences,"Physics, Atomic, Molecular & Chemical"
+Physical_Sciences,"Physics, Condensed Matter"
+Physical_Sciences,"Physics, Fluids & Plasmas"
+Physical_Sciences,"Physics, Mathematical"
+Physical_Sciences,"Physics, Multidisciplinary"
+Physical_Sciences,"Physics, Nuclear"
+Physical_Sciences,"Physics, Particles & Fields"
+Physical_Sciences,Polymer Science
+Physical_Sciences,Spectroscopy
+Physical_Sciences,Statistics & Probability
+Physical_Sciences,Thermodynamics
+Physical_Sciences,Water Resources
+Social_Sciences,Anthropology
+Social_Sciences,Archaeology
+Social_Sciences,Area Studies
+Social_Sciences,Asian Studies
+Social_Sciences,Business
+Social_Sciences,"Business, Finance"
+Social_Sciences,Communication
+Social_Sciences,Criminology & Penology
+Social_Sciences,Demography
+Social_Sciences,Economics
+Social_Sciences,Education & Educational Research
+Social_Sciences,"Education, Scientific Disciplines"
+Social_Sciences,"Education, Special"
+Social_Sciences,Environmental Studies
+Social_Sciences,Ethics
+Social_Sciences,Ethnic Studies
+Social_Sciences,Family Studies
+Social_Sciences,"Film, Radio, Television          "
+Social_Sciences,Geography
+Social_Sciences,Gerontology
+Social_Sciences,Health Policy & Services
+Social_Sciences,History of Social Sciences
+Social_Sciences,"Hospitality, Leisure, Sport & Tourism"
+Social_Sciences,Industrial Relations & Labor
+Social_Sciences,International Relations
+Social_Sciences,Law
+Social_Sciences,Linguistics
+Social_Sciences,Management
+Social_Sciences,Planning & Development
+Social_Sciences,Political Science
+Social_Sciences,Psychology
+Social_Sciences,"Psychology, Applied"
+Social_Sciences,"Psychology, Biological"
+Social_Sciences,"Psychology, Clinical"
+Social_Sciences,"Psychology, Developmental"
+Social_Sciences,"Psychology, Educational"
+Social_Sciences,"Psychology, Experimental"
+Social_Sciences,"Psychology, Mathematical"
+Social_Sciences,"Psychology, Multidisciplinary"
+Social_Sciences,"Psychology, Psychoanalysis"
+Social_Sciences,"Psychology, Social"
+Social_Sciences,Public Administration
+Social_Sciences,Social Issues
+Social_Sciences,"Social Sciences, Biomedical"
+Social_Sciences,"Social Sciences, Interdisciplinary"
+Social_Sciences,"Social Sciences, Mathematical Methods"
+Social_Sciences,Social Work
+Social_Sciences,Sociology
+Social_Sciences,Urban Studies
+Social_Sciences,Women’s Studies
