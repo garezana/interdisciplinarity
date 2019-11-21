@@ -134,15 +134,15 @@ ALLDATA$coarse_cat<-ALLDATA$coarse_cat %>% replace_na("uncategorized")
 
 # analysis: how many coarse cats cited in each article 
 coursecats_cited<-ALLDATA %>% group_by(focaljrnl_type,focal_jrnl,article_id) %>% summarize(cats_cited=n_distinct(coarse_cat))
-coursecats_cited_table1<-coursecats_cited %>% group_by(focaljrnl_type) %>% summarize(avg=mean(cats_cited))
-coursecats_cited_table2<-coursecats_cited %>% group_by(focaljrnl_type,focal_jrnl) %>% summarize(avg=mean(cats_cited))
+coursecats_cited_table1<-coursecats_cited %>% group_by(focaljrnl_type) %>% summarize(avg=mean(cats_cited),sd=sd(cats_cited))
+coursecats_cited_table2<-coursecats_cited %>% group_by(focaljrnl_type,focal_jrnl) %>% summarize(avg=mean(cats_cited),sd=sd(cats_cited))
 
 
 # analysis: how many of each coarse cat cited in each article 
 # use frequency because different articles have different numbers of citation 
 counts_by_coarsecat<-ALLDATA %>% group_by(focaljrnl_type,focal_jrnl,article_id,coarse_cat) %>% tally() %>% mutate(pcnt = n / sum(n)*100) %>% arrange(focaljrnl_type,focal_jrnl,article_id,n)
-counts_by_coarsecat_table1<-counts_by_coarsecat %>% group_by(focaljrnl_type,focal_jrnl,coarse_cat) %>% summarize(avg_pcnt=mean(pcnt))
-counts_by_coarsecat_table2<-counts_by_coarsecat %>% group_by(focaljrnl_type,coarse_cat) %>% summarize(avg_pcnt=mean(pcnt)) %>% arrange(coarse_cat)
+counts_by_coarsecat_table1<-counts_by_coarsecat %>% group_by(focaljrnl_type,focal_jrnl,coarse_cat) %>% summarize(avg_pcnt=mean(pcnt),sd=sd(pcnt))
+counts_by_coarsecat_table2<-counts_by_coarsecat %>% group_by(focaljrnl_type,coarse_cat) %>% summarize(avg_pcnt=mean(pcnt),sd=sd(pcnt)) %>% arrange(coarse_cat)
 
 
 
@@ -153,3 +153,53 @@ ggplot(data=counts_by_coarsecat_table2, aes(x=coarse_cat, y=avg_pcnt,fill=focalj
 
 
 ALLDATA %>% group_by(focaljrnl_type,coarse_cat) %>% summarize(count=n()) %>% arrange(desc(count))
+
+
+
+##########################
+##########################
+##########################
+# Geographic Diversity  
+DivDataPooled<-ALLDATA %>% group_by(focaljrnl_type,focal_jrnl,article_id,coarse_cat) %>% tally()  
+DivDataPooled<-spread(DivDataPooled, coarse_cat, n) 
+column_names<-colnames(DivDataPooled)
+DivDataPooled[is.na(DivDataPooled)] <- 0
+DivDataPooled<-ungroup(DivDataPooled)
+library(vegan)
+# 4: Geo Diverisity using Inverse Simpson's Index (expressed as 1/D)
+IsimpDivTable <- diversity((DivDataPooled %>% select(-focaljrnl_type,-focal_jrnl,-article_id)), index="invsimpson") #Need to strip away the journal and year columns for vegan to do the analysis
+# Table DIVERSITY with Results and Journals
+IsimpDivTable <- data.frame(IsimpDivTable)
+IsimpDivTable$focaljrnl_type <-DivDataPooled$focaljrnl_type #Add year as a column
+IsimpDivTable$focal_jrnl <-DivDataPooled$focal_jrnl #Add year as a column
+IsimpDivTable$article_id <-DivDataPooled$article_id #Add year as a column
+
+IsimpDivTable<-rename(IsimpDivTable, InvSimpson=IsimpDivTable) #rename the columns
+IsimpDivTable <- IsimpDivTable[c("focaljrnl_type","focal_jrnl","article_id","InvSimpson")] #reorder the columns
+IsimpDivTable<-as_tibble(IsimpDivTable)
+
+# THIS CALCLULATES THE SIMPSONS INDEX (expressed as 1-D)
+
+simpDivTable <- diversity((DivDataPooled %>% select(-focaljrnl_type,-focal_jrnl,-article_id)), index="simpson") #Need to strip away the journal and year columns for vegan to do the analysis
+# Table DIVERSITY with Results and Journals
+simpDivTable <- data.frame(simpDivTable)
+simpDivTable$focaljrnl_type <-DivDataPooled$focaljrnl_type #Add year as a column
+simpDivTable$focal_jrnl <-DivDataPooled$focal_jrnl #Add year as a column
+simpDivTable$article_id <-DivDataPooled$article_id #Add year as a column
+
+simpDivTable<-rename(simpDivTable, Simpson=simpDivTable) #rename the columns
+simpDivTable <- simpDivTable[c("focaljrnl_type","focal_jrnl","article_id","Simpson")] #reorder the columns
+
+simpDivTable<-as_tibble(simpDivTable)
+
+IsimpDivTable<-left_join(IsimpDivTable,simpDivTable, by=c("focaljrnl_type","focal_jrnl","article_id"))
+rm(simpDivTable)
+
+avgs_diversity<-IsimpDivTable %>% group_by(focaljrnl_type,focal_jrnl) %>% summarize(avg=mean(InvSimpson),sd=sd(InvSimpson))
+
+Plot2 <- ggplot(avgs_diversity, aes(focal_jrnl, avg)) + 
+  geom_col() +  
+  geom_errorbar(aes(ymin = avg - sd, ymax = avg + sd), width=0.2)
+
+Plot2 <- Plot2 + labs(y="avg. simpson's div. index", x = "journal") + theme_classic()+theme(axis.text.x = element_text(angle = 45,hjust = 1))
+  
