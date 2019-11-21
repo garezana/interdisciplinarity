@@ -125,12 +125,18 @@ head(ALLDATA,50)
 missing_coarse_cat<-filter(ALLDATA,is.na(coarse_cat))
 missing_coarse_cat$coarse_cat<-droplevels(missing_coarse_cat$coarse_cat)
 missing.cats<-levels(as.factor(missing_coarse_cat$cited_jrnl))
+missing.cats<-as.data.frame(missing.cats)
 head(missing.cats,50)
 
 # code any missing categories as missing instead of NA
 levels(ALLDATA$coarse_cat)<-c(levels(ALLDATA$coarse_cat),"uncategorized")
 ALLDATA$coarse_cat<-ALLDATA$coarse_cat %>% replace_na("uncategorized")
 
+
+# analysis: how many fine cats cited in each article 
+finecats_cited<-ALLDATA %>% group_by(focaljrnl_type,focal_jrnl,article_id) %>% summarize(cats_cited=n_distinct(wos_cat))
+finecats_cited_table1<-finecats_cited %>% group_by(focaljrnl_type) %>% summarize(avg=mean(cats_cited),sd=sd(cats_cited))
+finecats_cited_table2<-finecats_cited %>% group_by(focaljrnl_type,focal_jrnl) %>% summarize(avg=mean(cats_cited),sd=sd(cats_cited))
 
 # analysis: how many coarse cats cited in each article 
 coursecats_cited<-ALLDATA %>% group_by(focaljrnl_type,focal_jrnl,article_id) %>% summarize(cats_cited=n_distinct(coarse_cat))
@@ -145,11 +151,25 @@ counts_by_coarsecat_table1<-counts_by_coarsecat %>% group_by(focaljrnl_type,foca
 counts_by_coarsecat_table2<-counts_by_coarsecat %>% group_by(focaljrnl_type,coarse_cat) %>% summarize(avg_pcnt=mean(pcnt),sd=sd(pcnt)) %>% arrange(coarse_cat)
 
 
-
-ggplot(data=counts_by_coarsecat_table2, aes(x=coarse_cat, y=avg_pcnt,fill=focaljrnl_type)) +
+coarsecat_plot<-ggplot(data=counts_by_coarsecat_table2, aes(x=coarse_cat, y=avg_pcnt,fill=focaljrnl_type)) +
   geom_bar(stat="identity", position=position_dodge())+
   scale_fill_brewer(palette="Paired")+
   theme_minimal()
+coarsecat_plot
+# analysis: how many of each fine cat cited in each article 
+# use frequency because different articles have different numbers of citation 
+counts_by_finecat<-ALLDATA %>% group_by(focaljrnl_type,focal_jrnl,article_id,wos_cat) %>% tally() %>% mutate(pcnt = n / sum(n)*100) %>% arrange(focaljrnl_type,focal_jrnl,article_id,n)
+counts_by_finecat_table1<-counts_by_finecat %>% group_by(focaljrnl_type,focal_jrnl,wos_cat) %>% summarize(avg_pcnt=mean(pcnt),sd=sd(pcnt))
+counts_by_finecat_table2<-counts_by_finecat %>% group_by(focaljrnl_type,wos_cat) %>% summarize(avg_pcnt=mean(pcnt),sd=sd(pcnt)) %>% arrange(wos_cat)
+levels(counts_by_finecat_table2$wos_cat)
+counts_by_finecat_table2$wos_cat<-droplevels(counts_by_finecat_table2$wos_cat)
+counts_by_finecat_table2<-droplevels(counts_by_finecat_table2)
+
+finecat_plot<-ggplot(data=counts_by_finecat_table2, aes(x=wos_cat, y=avg_pcnt,fill=focaljrnl_type)) +
+  geom_bar(stat="identity", position=position_dodge())+
+  scale_fill_brewer(palette="Paired")+
+  theme_minimal()
+finecat_plot
 
 
 ALLDATA %>% group_by(focaljrnl_type,coarse_cat) %>% summarize(count=n()) %>% arrange(desc(count))
@@ -197,7 +217,7 @@ rm(simpDivTable)
 
 avgs_diversity<-IsimpDivTable %>% group_by(focaljrnl_type,focal_jrnl) %>% summarize(avg=mean(InvSimpson),sd=sd(InvSimpson))
 
-Plot2 <- ggplot(avgs_diversity, aes(focal_jrnl, avg)) + 
+Plot2 <- ggplot(avgs_diversity, aes(focal_jrnl, avg), fill=focaljrnl_type) + 
   geom_col() +  
   geom_errorbar(aes(ymin = avg - sd, ymax = avg + sd), width=0.2)
 
