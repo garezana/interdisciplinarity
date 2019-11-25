@@ -133,6 +133,14 @@ levels(ALLDATA$coarse_cat)<-c(levels(ALLDATA$coarse_cat),"uncategorized")
 ALLDATA$coarse_cat<-ALLDATA$coarse_cat %>% replace_na("uncategorized")
 
 
+mid_cat<-ALLDATA %>% distinct(coarse_cat,wos_cat) %>% arrange(coarse_cat,wos_cat)
+write.csv(mid_cat,"./data/mid_cat.csv")
+
+
+
+
+
+
 # analysis: how many fine cats cited in each article 
 finecats_cited<-ALLDATA %>% group_by(focaljrnl_type,focal_jrnl,article_id) %>% summarize(cats_cited=n_distinct(wos_cat))
 finecats_cited_table1<-finecats_cited %>% group_by(focaljrnl_type) %>% summarize(avg=mean(cats_cited),sd=sd(cats_cited))
@@ -221,5 +229,44 @@ Plot2 <- ggplot(avgs_diversity, aes(focal_jrnl, avg), fill=focaljrnl_type) +
   geom_col() +  
   geom_errorbar(aes(ymin = avg - sd, ymax = avg + sd), width=0.2)
 
-Plot2 <- Plot2 + labs(y="avg. simpson's div. index", x = "journal") + theme_classic()+theme(axis.text.x = element_text(angle = 45,hjust = 1))
-  
+Plot2 <- Plot2 + labs(y="a g. simpson's div. index", x = "journal") + theme_classic()+theme(axis.text.x = element_text(angle = 45,hjust = 1))
+
+
+
+# STATS
+library(lme4)
+
+
+
+mod1<-glmer(n ~ (1|focal_jrnl), data = counts_by_coarsecat ,family=poisson, na.action = "na.fail")
+mod2<-glmer(n ~ focaljrnl_type + (1|focal_jrnl), data = counts_by_coarsecat ,family=poisson, na.action = "na.fail")
+mod3<-glmer(n ~ focaljrnl_type + coarse_cat +(1|focal_jrnl), data = counts_by_coarsecat ,family=poisson, na.action = "na.fail")
+mod4<-glmer(n ~ coarse_cat +(1|focal_jrnl), data = counts_by_coarsecat ,family=poisson, na.action = "na.fail")
+
+AIC(mod1,mod2,mod3,mod4)
+anova(mod3,mod4, test = "Chisq")
+
+summary(mod3)
+
+
+# UNCATEGORIZED
+
+head(ALLDATA)
+levels(as.factor(ALLDATA$wos_cat))
+levels(as.factor(ALLDATA$coarse_cat))
+
+
+uncat<-filter(ALLDATA,coarse_cat=="uncategorized") %>% 
+  distinct(cited_jrnl,coarse_cat,.keep_all = TRUE) %>% 
+  arrange(cited_jrnl)
+
+foo<-unlist(strsplit(uncat$cited_jrnl , " "))
+foo<-as.data.frame(foo)
+head(foo,10)
+count_snippets<-foo %>% group_by(foo) %>% summarize(count=n()) %>% arrange(desc(count))
+# ACTA, JOURNAL, J, ANN: journals  (note ANN could be "Annual")
+# FAO: UN
+# PROCEEDINGS, CONFERENCES
+# UNEP, UN, UNFCCC, UNDP
+# WORKING
+
