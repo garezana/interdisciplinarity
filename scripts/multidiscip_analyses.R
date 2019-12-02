@@ -159,11 +159,27 @@ counts_by_coarsecat_table1<-counts_by_coarsecat %>% group_by(focaljrnl_type,foca
 counts_by_coarsecat_table2<-counts_by_coarsecat %>% group_by(focaljrnl_type,coarse_cat) %>% summarize(avg_pcnt=mean(pcnt),sd=sd(pcnt)) %>% arrange(coarse_cat)
 
 
+
 coarsecat_plot<-ggplot(data=counts_by_coarsecat_table2, aes(x=coarse_cat, y=avg_pcnt,fill=focaljrnl_type)) +
   geom_bar(stat="identity", position=position_dodge())+
-  scale_fill_brewer(palette="Paired")+
-  theme_minimal()
+  scale_fill_brewer(palette="Paired")
+coarsecat_plot<-coarsecat_plot+theme_classic()+
+  theme(plot.title = element_text(face="bold", size=18, vjust=-15, hjust=0.05),        #Sets title size, style, locatio
+        axis.title.x=element_text(colour="black", size = 20, vjust=0),            #sets x axis title size, style, distance from axis #add , face = "bold" if you want bold
+        axis.title.y=element_text(colour="black", size = 20, vjust=2),            #sets y axis title size, style, distance from axis #add , face = "bold" if you want bold
+        axis.line.y = element_line(color="black", size = 0.5, lineend="square"),
+        axis.line.x = element_line(color="black", size = 0.5, lineend="square"),
+        axis.text=element_text(colour="black", size = 18),                              #sets size and style of labels on axes
+        legend.position = 'top',
+        legend.title = element_blank(),   #Removes the Legend title
+        legend.text = element_text(color="black", size=16),  
+        # legend.position = c(0.9,0.8),
+        legend.background = element_rect(colour = 'black', size = 0.5, linetype='solid'),
+        axis.text.x=element_text(angle = 45, hjust = 1))
+coarsecat_plot<-coarsecat_plot+labs(fill = "Focal Journal Type",x="Web of Science Category", y= "Percent (avg.)")
 coarsecat_plot
+
+
 # analysis: how many of each fine cat cited in each article 
 # use frequency because different articles have different numbers of citation 
 counts_by_finecat<-ALLDATA %>% group_by(focaljrnl_type,focal_jrnl,article_id,wos_cat) %>% tally() %>% mutate(pcnt = n / sum(n)*100) %>% arrange(focaljrnl_type,focal_jrnl,article_id,n)
@@ -229,7 +245,7 @@ Plot2 <- ggplot(avgs_diversity, aes(focal_jrnl, avg), fill=focaljrnl_type) +
   geom_col() +  
   geom_errorbar(aes(ymin = avg - sd, ymax = avg + sd), width=0.2)
 
-Plot2 <- Plot2 + labs(y="a g. simpson's div. index", x = "journal") + theme_classic()+theme(axis.text.x = element_text(angle = 45,hjust = 1))
+Plot2 <- Plot2 + labs(y="avg. simpson's div. index", x = "journal") + theme_classic()+theme(axis.text.x = element_text(angle = 45,hjust = 1))
 
 
 
