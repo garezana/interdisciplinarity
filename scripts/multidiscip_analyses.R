@@ -20,10 +20,6 @@ names(ALLDATA)
 # rename and reorder the columns
 ALLDATA <- ALLDATA %>% rename("focal_jrnl"="filename","cited_jrnl"="citedjournal") %>% select(uid,article,focal_jrnl,cited_jrnl)
 
-
-
-
-
 # Simplify the journal names
 ALLDATA$focal_jrnl<-gsub("./scripts/data/outputdata//","",ALLDATA$focal_jrnl)
 ALLDATA$focal_jrnl<-gsub(".csv","",ALLDATA$focal_jrnl)
@@ -32,8 +28,6 @@ ALLDATA$focal_jrnl<-gsub("ENVIRON","ENV",ALLDATA$focal_jrnl)
 ALLDATA$focal_jrnl<-gsub("CONSERV","CON",ALLDATA$focal_jrnl)
 ALLDATA$focal_jrnl<-gsub("POLICY","POL",ALLDATA$focal_jrnl)
 ALLDATA$focal_jrnl<-gsub("POPUL","POP",ALLDATA$focal_jrnl)
-
-
 head(ALLDATA,20)
 
 # Save Journal Names as Factors
@@ -51,7 +45,6 @@ ALLDATA$focaljrnl_type[ALLDATA$focal_jrnl=="ENV.CON"]<-"Envt Science"
 ALLDATA$focaljrnl_type[ALLDATA$focal_jrnl=="ENV.RES.LETT"]<-"Envt Science"
 ALLDATA$focaljrnl_type[ALLDATA$focal_jrnl=="ENV.SCI.POL"]<-"Envt Science"
 ALLDATA$focaljrnl_type[ALLDATA$focal_jrnl=="J.ENV.SCI-CHINA"]<-"Envt Science"
-
 ALLDATA$focaljrnl_type[ALLDATA$focal_jrnl=="ENV.POL.GOV"]<-"Envt Studies"
 ALLDATA$focaljrnl_type[ALLDATA$focal_jrnl=="ENV.PLAN.C-POLIT"]<-"Envt Studies"
 ALLDATA$focaljrnl_type[ALLDATA$focal_jrnl=="ENV.IMPACT.ASSES"]<-"Envt Studies"
@@ -60,11 +53,12 @@ ALLDATA$focaljrnl_type[ALLDATA$focal_jrnl=="POP.ENV"]<-"Envt Studies"
 
 
 # Add a unique I number to each article
-
 ALLDATA$article_id <- ALLDATA %>% group_indices(article) 
 
 # Articles per Journal
-ALLDATA %>% group_by(focal_jrnl) %>% summarize(n())
+articles_per_journal<-ALLDATA %>% group_by(focal_jrnl,focaljrnl_type) %>%
+  summarize(n_articles=n()) %>% arrange(focaljrnl_type,desc(n_articles)) 
+write.table(articles_per_journal, file = "./output/articles_per_journal.txt", sep = ",", quote = FALSE, row.names = F)
 
 levels(ALLDATA$cited_jrnl)<-c(levels(ALLDATA$cited_jrnl),"missing_jrnl_name")
 # replace NA with "missing_jrnl_name"
@@ -77,10 +71,25 @@ ALLDATA$cited_jrnl<-gsub('[[:digit:]]+', '', ALLDATA$cited_jrnl)
 ALLDATA$cited_jrnl<-gsub("[[:punct:]]","",ALLDATA$cited_jrnl)
 ALLDATA$cited_jrnl<-trimws(ALLDATA$cited_jrnl)
 
-# CIitations 
+# Number of Artciles and citations
+nArticles = ALLDATA %>% summarize(n_distinct(article_id))
+nCitations = nrow(ALLDATA)
 
+# Citations 
 journalsByArticles = ALLDATA %>% group_by(focal_jrnl,uid,cited_jrnl) %>% add_count(cited_jrnl) %>% distinct(.keep_all = FALSE) 
 
+# No_of_citations_per_article
+No_of_citations_per_article<-ALLDATA %>% group_by(article_id, focal_jrnl,focaljrnl_type) %>%
+  summarize(n_citations=n()) %>% arrange(focal_jrnl,desc(n_citations)) 
+hist_cit_count<-ggplot(No_of_citations_per_article, aes(x=n_citations)) + 
+  geom_histogram(binwidth=25,color="darkblue", fill="white")+
+  theme_classic()
+
+# avg_citations_per_article
+No_of_citations_per_article<-ALLDATA %>% group_by(article_id, focal_jrnl,focaljrnl_type) %>%
+  summarize(n_citations=n()) %>% arrange(focal_jrnl,desc(n_citations)) %>% 
+  group_by(focaljrnl_type,focal_jrnl) %>% summarize(avg=mean(n_citations),sd=sd(n_citations))
+write.table(No_of_citations_per_article, file = "./output/No_of_citations_per_article.txt", sep = ",", quote = FALSE, row.names = F)
 
 # Read in the file with the WOS categories
 WOS_cats<-read.csv("./data/WOS_Core_Category_Sept_2019.csv")
@@ -102,10 +111,8 @@ head(coarse_cats)
 ALLDATA<-left_join(ALLDATA,coarse_cats)
 missing_coarse_cat<-filter(ALLDATA,is.na(coarse_cat))
 missing_coarse_cat$coarse_cat<-droplevels(missing_coarse_cat$coarse_cat)
-
 head(missing_coarse_cat,20)
 levels(as.factor(missing_coarse_cat$wos_cat))
-
 
 levels(ALLDATA$coarse_cat)
 # Need to define what couarse ategories these "fine categories" belong to
@@ -145,11 +152,14 @@ write.csv(mid_cat,"./data/mid_cat.csv")
 finecats_cited<-ALLDATA %>% group_by(focaljrnl_type,focal_jrnl,article_id) %>% summarize(cats_cited=n_distinct(wos_cat))
 finecats_cited_table1<-finecats_cited %>% group_by(focaljrnl_type) %>% summarize(avg=mean(cats_cited),sd=sd(cats_cited))
 finecats_cited_table2<-finecats_cited %>% group_by(focaljrnl_type,focal_jrnl) %>% summarize(avg=mean(cats_cited),sd=sd(cats_cited))
+write.table(finecats_cited_table2, file = "./output/finecats_cited_per_article.txt", sep = ",", quote = FALSE, row.names = F)
+
 
 # analysis: how many coarse cats cited in each article 
 coursecats_cited<-ALLDATA %>% group_by(focaljrnl_type,focal_jrnl,article_id) %>% summarize(cats_cited=n_distinct(coarse_cat))
 coursecats_cited_table1<-coursecats_cited %>% group_by(focaljrnl_type) %>% summarize(avg=mean(cats_cited),sd=sd(cats_cited))
 coursecats_cited_table2<-coursecats_cited %>% group_by(focaljrnl_type,focal_jrnl) %>% summarize(avg=mean(cats_cited),sd=sd(cats_cited))
+write.table(coursecats_cited_table2, file = "./output/coursecats_cited_per_articles.txt", sep = ",", quote = FALSE, row.names = F)
 
 
 # analysis: how many of each coarse cat cited in each article 
@@ -157,6 +167,7 @@ coursecats_cited_table2<-coursecats_cited %>% group_by(focaljrnl_type,focal_jrnl
 counts_by_coarsecat<-ALLDATA %>% group_by(focaljrnl_type,focal_jrnl,article_id,coarse_cat) %>% tally() %>% mutate(pcnt = n / sum(n)*100) %>% arrange(focaljrnl_type,focal_jrnl,article_id,n)
 counts_by_coarsecat_table1<-counts_by_coarsecat %>% group_by(focaljrnl_type,focal_jrnl,coarse_cat) %>% summarize(avg_pcnt=mean(pcnt),sd=sd(pcnt))
 counts_by_coarsecat_table2<-counts_by_coarsecat %>% group_by(focaljrnl_type,coarse_cat) %>% summarize(avg_pcnt=mean(pcnt),sd=sd(pcnt)) %>% arrange(coarse_cat)
+write.table(counts_by_coarsecat_table2, file = "./output/pcnt_by_coarsecat.txt", sep = ",", quote = FALSE, row.names = F)
 
 
 
@@ -240,6 +251,8 @@ IsimpDivTable<-left_join(IsimpDivTable,simpDivTable, by=c("focaljrnl_type","foca
 rm(simpDivTable)
 
 avgs_diversity<-IsimpDivTable %>% group_by(focaljrnl_type,focal_jrnl) %>% summarize(avg=mean(InvSimpson),sd=sd(InvSimpson))
+write.table(avgs_diversity, file = "./output/avgs_diversity.txt", sep = ",", quote = FALSE, row.names = F)
+
 
 Plot2 <- ggplot(avgs_diversity, aes(focal_jrnl, avg), fill=focaljrnl_type) + 
   geom_col() +  

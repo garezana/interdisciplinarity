@@ -1,0 +1,11 @@
+focal_jrnl,focaljrnl_type,n_articles
+ECOL.ECON,Envt Science,42318
+ENV.RES.LETT,Envt Science,39656
+J.ENV.SCI-CHINA,Envt Science,17813
+ENV.SCI.POL,Envt Science,17701
+ENV.CON,Envt Science,4235
+ENV.PLAN.C-POLIT,Envt Studies,7144
+ENV.IMPACT.ASSES,Envt Studies,6377
+ENV.POL.GOV,Envt Studies,2715
+POP.ENV,Envt Studies,1926
+J.ENV.DEV,Envt Studies,1280

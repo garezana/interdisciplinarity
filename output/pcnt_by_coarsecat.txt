@@ -1,0 +1,15 @@
+focaljrnl_type,coarse_cat,avg_pcnt,sd
+Envt Science,Arts_Humanities,1.61065497428368,1.33437914446496
+Envt Studies,Arts_Humanities,1.67177419851374,1.08022118968856
+Envt Science,Clinical_PreClinical_Health,4.70569975994651,6.33756401835011
+Envt Studies,Clinical_PreClinical_Health,4.63833057980823,7.18840091783311
+Envt Science,Engineering_Technology,10.4862094516341,10.9033298127948
+Envt Studies,Engineering_Technology,9.82328780229074,13.0920141054692
+Envt Science,Life_Sciences,31.6866120278935,17.058992405099
+Envt Studies,Life_Sciences,13.3020437940227,12.2227505693036
+Envt Science,Physical_Sciences,20.061077343474,17.6345787206654
+Envt Studies,Physical_Sciences,6.34665239163965,5.7012165722043
+Envt Science,Social_Sciences,23.8631718516603,18.6212331107816
+Envt Studies,Social_Sciences,40.6421369477667,17.6469859927605
+Envt Science,uncategorized,24.5535212076169,20.0495219177822
+Envt Studies,uncategorized,38.206557040658,16.9242750270938
